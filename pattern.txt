@@ -1,0 +1,25 @@
+    {
+      "transformPatterns": {
+        "$0": [
+          {
+            "kind": "$convert",
+            "input": {
+              "kind": "$document",
+              "path": "rules['Document_Business_Rule_Calculate_200']"
+            },
+            "target": {
+              "name": "integer"
+            },
+            "transformations": [
+              {
+                "kind": "$set-table-column-context",
+                "target": {
+                  "kind": "$document",
+                  "path": "fields['Table'].columns['ID']"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }

@@ -1,0 +1,1 @@
+public IDictionary<string, DocumentFieldColumnRuleDto> TableColumns { get; set; }
