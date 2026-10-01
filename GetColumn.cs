@@ -47,9 +47,9 @@
 				
 				
 				
-				private static ICollection<BatchTypeDocumentFieldColumn> CreateTableColumns(DocumentFieldDto documentFieldDto, Ricoh.RDI.Data.Types.TableType tableType = null)
+				private static ICollection<BatchTypeDocumentFieldColumn> CreateTableColumns(DocumentFieldDto documentFieldDto, Types.TableType tableType = null)
         {
-            tableType ??= documentFieldDto?.Type as Ricoh.RDI.Data.Types.TableType;
+            tableType ??= documentFieldDto?.Type as Types.TableType;
             if (tableType == null)
             {
                 return null;
@@ -99,8 +99,8 @@
 		
 		
 		
-		private static (bool Resolved, int ColumnIndex, Ricoh.RDI.Data.Types.ColumnType ColumnType) ResolveColumn(
-            Ricoh.RDI.Data.Types.TableType tableType,
+		private static (bool Resolved, int ColumnIndex,Types.ColumnType ColumnType) ResolveColumn(
+           Types.TableType tableType,
             string key)
         {
             if (tableType == null || string.IsNullOrWhiteSpace(key))
