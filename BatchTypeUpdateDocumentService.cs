@@ -1,3 +1,27 @@
+
+
+
+
+
+private readonly BatchTypeDocumentFieldColumnSyncService _tableColumnSyncService;
+public BatchTypeUpdateDocumentService(
+            BatchTypeDocumentFieldColumnSyncService tableColumnSyncService,
+            : base(dbContext)
+        {
+            _tableColumnSyncService = tableColumnSyncService;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
 public async Tas ApplyDocumentsAsync() {
 	if (documentFieldDto.ValidationConditions != null)
 {
@@ -9,6 +33,12 @@ if (documentFieldDto.TableColumns != null)
     await SyncTableColumnsAsync(batchTypeDocumentField, documentFieldDto);
 }
 
+ if (documentFieldDto.TableColumns != null)
+{
+	await _tableColumnSyncService.SyncAsync(batchTypeDocumentField, documentFieldDto);
+}
+
+
 var batchTypeDocumentField = batchTypeDocument.DocumentFields
     .SingleOrDefault(f => f.DocumentFieldId.Equals(documentFieldId));
 
@@ -17,7 +47,10 @@ if (batchTypeDocumentField == null)
     batchTypeDocumentField = new BatchTypeDocumentField
     {
         TableColumns = CreateTableColumns(documentFieldDto)
+		TableColumns = BatchTypeDocumentFieldColumnMapper.Create(documentFieldDto)
     };
+	
+	
 	
 	
 	else if (batchTypeDocumentField.Status == DocumentFieldStatus.Suspended)
@@ -126,3 +159,26 @@ private static ICollection<BatchTypeDocumentFieldColumn> CreateTableColumns(Docu
                 await _dbContext.BatchTypeDocumentFieldColumns.AddAsync(source);
             }
         }
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		foreach (var fieldValue in result)
+            {
+                await ResolveDocumentFieldAsync(
+                    dbContext,
+                    fieldValue);
+
+                await ApplyTransformPatternAsync(
+                    dbContext,
+                    document,
+                    fieldValue);
+            }
